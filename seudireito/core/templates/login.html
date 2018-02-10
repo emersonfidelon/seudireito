@@ -1,36 +1,88 @@
 {% extends "base.html" %}
 
+{% load widget_tweaks %}
+
 {% block content %}
 
 <!--Feature-area-->
 <section class="gray-bg section-padding" id="service-page">
     <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-3">
-                <div class="box">
-                    <div class="box-icon">
-                        
+        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">Sign In</div>
+                    <div style="float:right; font-size: 80%; position: relative; top:-10px">
+                        <a href="#">Forgot password?</a>
                     </div>
-                    <h4>EASY TO USE</h4>
-                    <p>Lorem ipsum dolor sit amt, consectet adop adipisicing elit, sed do eiusmod tepo raraincididunt ugt labore.</p>
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-                <div class="box">
-                    <div class="box-icon">
-                        
-                    </div>
-                    <h4>AWESOEM DESIGN</h4>
-                    <p>Lorem ipsum dolor sit amt, consectet adop adipisicing elit, sed do eiusmod tepo raraincididunt ugt labore.</p>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-3">
-                <div class="box">
-                    <div class="box-icon">
-                        
-                    </div>
-                    <h4>EASY TO CUSTOMAIZE</h4>
-                    <p>Lorem ipsum dolor sit amt, consectet adop adipisicing elit, sed do eiusmod tepo raraincididunt ugt labore.</p>
+    
+                <div style="padding-top:30px" class="panel-body">
+    
+                    <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+    
+                    <form class="form-horizontal" method="POST">
+                        {% csrf_token %}
+                        {% for error in form.non_field_errors  %}
+                        <div class="alert-danger alert">
+                            {{ error }}
+                        </div>
+                        {% endfor %}
+                        <div style="margin-bottom: 25px" class="input-group" {% if form.username.error %} has-error {% endif %}>
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </span>
+                            {% render_field form.username class="form-control" placeholder="Email" %}
+                            {% for error in form.username.errors %}
+                            <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+    
+                        <div style="margin-bottom: 25px" class="input-group" {% if form.password.error %} has-error {% endif %}>
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-lock"></i>
+                            </span>
+                            {% render_field form.password class="form-control" placeholder="Senha" %}
+                            {% for error in form.password.errors %}
+                            <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+    
+    
+    
+                        <div class="input-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
+                                </label>
+                            </div>
+                        </div>
+    
+    
+                        <div style="margin-top:10px" class="form-group">
+                            <!-- Button -->
+    
+                            <div class="col-sm-12 controls">
+                                <input type="submit" value="Login" class="btn btn-success">
+                                <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
+    
+                            </div>
+                        </div>
+    
+    
+                        <div class="form-group">
+                            <div class="col-md-12 control">
+                                <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                                    Don't have an account!
+                                    <a href="#">
+                                        Sign Up Here
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+    
+    
+    
                 </div>
             </div>
         </div>
