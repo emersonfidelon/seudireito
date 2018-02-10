@@ -9,3 +9,10 @@ def index(request):
         'title': 'Seu Direito'
     }
     return render(request, template_name, context)
+
+def companies(request):
+    template_name = 'companies.html'
+    context = {
+        'title': 'Seu Direito :: Empresas'
+    }
+    return render(request, template_name, context)

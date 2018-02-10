@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.views import login
+
 from seudireito.core import views
 
 urlpatterns = [
-    url(r'^$', views.index),
+    url(r'^$', views.index, name='index'),
+    url(r'^$', views.companies, name='companies'),
+    url(r'^entrar/$', login, {'template_name': 'login.html'},name='login'),
     url(r'^admin/', admin.site.urls),
 ]
