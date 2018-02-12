@@ -10,10 +10,13 @@ from django.conf import settings
 
 class UserManager(BaseUserManager):
 
-    def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
+    def _create_user(self, username, email, password, is_staff, is_superuser, **extra_fields):
         now = timezone.now()
+        
         email = self.normalize_email(email)
-        user = self.model(email=email,
+        user = self.model(
+                 username=email,   
+                 email=email,
                  is_staff=is_staff, is_active=True,
                  is_superuser=is_superuser, last_login=now,
                  date_joined=now, **extra_fields)
@@ -21,11 +24,11 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, email=None, password=None, **extra_fields):
-        return self._create_user(email, password, False, False, **extra_fields)
+    def create_user(self, username, email=None, password=None, **extra_fields):
+        return self._create_user(username, email, password, False, False, **extra_fields)
 
-    def create_superuser(self, email, password, **extra_fields):
-        user=self._create_user(email, password, True, True, **extra_fields)
+    def create_superuser(self, username, email, password, **extra_fields):
+        user=self._create_user(username, email, password, True, True, **extra_fields)
         user.is_active=True
         user.save(using=self._db)
         return user
@@ -33,6 +36,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
 
+    username = models.CharField(_('username'), max_length=255, unique=True)
     name = models.CharField(_('name'), max_length=100)
     email = models.EmailField(_('email address'), max_length=255, unique=True)
     is_company = models.BooleanField(_('company'), default=False)
@@ -64,12 +68,14 @@ class User(AbstractBaseUser, PermissionsMixin):
             company_profile = self.companyprofile
         return company_profile
 
+    def __str__(self):
+        return self.name or email
+
     def get_full_name(self):
         return self.name
 
     def get_short_name(self):
-        first_name = self.name.split(" ")
-        return first_name[0]
+        return str(self).split(" ")[0]
 
     def email_user(self, subject, message, from_email=None):
         send_mail(subject, message, from_email, [self.email])
@@ -77,7 +83,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class LawyerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     telephone = models.CharField(_('telephone'), max_length=30)
-    cpf = models.CharField(_('cpf'), max_length=15)
+    cpf = models.CharField(_('cpf'), max_length=15, unique=True)
 
 class CompanyProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

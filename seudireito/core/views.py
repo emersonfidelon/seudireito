@@ -2,17 +2,18 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import View, TemplateView, CreateView
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 def index(request):
     template_name = 'index.html'
-    context = {
-        'title': 'Seu Direito'
-    }
-    return render(request, template_name, context)
+    return render(request, template_name)
 
-def companies(request):
-    template_name = 'companies.html'
-    context = {
-        'title': 'Seu Direito :: Empresas'
-    }
-    return render(request, template_name, context)
+# class IndexView(TemplateView):
+    
+#     template_name = 'index.html'
+    
+# index = IndexView.as_view()

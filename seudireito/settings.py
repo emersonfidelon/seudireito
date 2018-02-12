@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    
+    # libs
     'widget_tweaks',
-
+    
+    # apps
     'seudireito.core',
     'seudireito.accounts',
 ]
@@ -128,7 +130,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'core:index'
+LOGOUT_URL = 'logout'
 
 # Define o model de usuários
 AUTH_USER_MODEL = 'accounts.User'
