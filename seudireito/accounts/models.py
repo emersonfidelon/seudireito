@@ -48,7 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_trusty = models.BooleanField(_('trusty'), default=False, help_text=_('Designates whether this user has confirmed his account.'))
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name']
+    REQUIRED_FIELDS = ['name','username']
 
     objects = UserManager()
 

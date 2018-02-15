@@ -20,7 +20,7 @@ from django.contrib.auth.views import login, logout
 from seudireito.core import views
 
 urlpatterns = [
-    url(r'^$', include('seudireito.core.urls', namespace='core')),
+    url(r'^', include('seudireito.core.urls', namespace='core')),
     url(r'^entrar/$', login, {'template_name': 'login.html'}, name='login'),
     url(r'^sair/$', logout, {'next_page': 'core:index'}, name='logout'),
     url(r'^conta/', include('seudireito.accounts.urls', namespace='accounts')),

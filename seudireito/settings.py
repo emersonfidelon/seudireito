@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     # libs
     'widget_tweaks',
+    'clear_cache',
     
     # apps
     'seudireito.core',

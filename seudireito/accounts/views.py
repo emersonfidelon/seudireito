@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView
 from django.contrib.auth import login, authenticate
 from django.core.urlresolvers import reverse_lazy
+from django.core.cache import cache
 
 from .models import User
 from .forms import UserAdminCreationForm, RegisterForm
 
 def register(request):
-    template_name = 'accounts/register_company.html'
+    cache.clear()
+    template_name = 'accounts/register.html'
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():

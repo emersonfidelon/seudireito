@@ -1,3 +1,5 @@
 Django==1.11
 psycopg2
 django-widget-tweaks
+django-clear-cache
+psycopg2-binary
